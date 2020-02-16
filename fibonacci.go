@@ -1,16 +1,15 @@
 package main
 
 import (
+	"fmt"
+	"image/color"
 	"math/rand"
 	"time"
-	"image/color"
-	"fmt"
 
 	"github.com/faiface/pixel"
 	"github.com/faiface/pixel/imdraw"
 	"github.com/faiface/pixel/pixelgl"
 	"golang.org/x/image/colornames"
-
 )
 
 func run() {
@@ -27,11 +26,11 @@ func run() {
 	// create draw pen
 	imd := imdraw.New(nil)
 
+	colourR := NewEvolvingColour()
+	colourG := NewEvolvingColour()
+	colourB := NewEvolvingColour()
 
-	
-	colourR := rand.Intn(256)
-	colourG := rand.Intn(256)
-	colourB := rand.Intn(256)
+	fmt.Print(colourR)
 
 	x := 0.0
 	y := 340.0
@@ -39,9 +38,15 @@ func run() {
 	for !win.Closed() {
 		win.Clear(colornames.Black)
 
-		imd.Color = color.RGBA{	uint8(adjustColourValue(colourR)),
-								uint8(adjustColourValue(colourG)),
-								uint8(adjustColourValue(colourB)), 0xff }
+		colourR = adjustColourValue(colourR)
+		colourG = adjustColourValue(colourG)
+		colourB = adjustColourValue(colourB)
+
+		imd.Color = color.RGBA{
+			uint8(colourR.value),
+			uint8(colourG.value),
+			uint8(colourB.value),
+			0xff}
 		imd.Push(pixel.V(x, y))
 		imd.Ellipse(pixel.V(3, 3), 0)
 
@@ -54,17 +59,6 @@ func run() {
 		}
 		// fmt.Printf("%s\n", x)
 	}
-}
-
-func adjustColourValue(currentValue int) int {
-	fmt.Printf("%s\n", currentValue)
-	if currentValue > 254  {
-		currentValue = 0
-	} else {
-		currentValue += 1
-	}
-	fmt.Printf("%s\n", currentValue)
-	return currentValue
 }
 
 // func adjustColourValue(currentValue int) int {
