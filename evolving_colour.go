@@ -20,7 +20,7 @@ func NewEvolvingColour() *EvolvingColour {
 	return eColour
 }
 
-func adjustColourValue(eColour EvolvingColour) EvolvingColour {
+func (eColour *EvolvingColour) adjustColourValue() {
 	switch eColour.ascOrDesc {
 	case "asc":
 		if eColour.value > 254 {
@@ -35,6 +35,4 @@ func adjustColourValue(eColour EvolvingColour) EvolvingColour {
 			eColour.value -= 1
 		}
 	}
-
-	return eColour
 }
