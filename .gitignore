@@ -1,2 +1,5 @@
 _debug_bin
 __debug_bin
+go.mod
+go.sum
+__debug_bin
