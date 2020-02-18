@@ -38,9 +38,9 @@ func run() {
 	for !win.Closed() {
 		win.Clear(colornames.Black)
 
-		// colourR.adjustColourValue()
-		// colourG.adjustColourValue()
-		// colourB.adjustColourValue()
+		colourR.adjustColourValue()
+		colourG.adjustColourValue()
+		colourB.adjustColourValue()
 
 		imd.Color = color.RGBA{
 			uint8(colourR.value),
