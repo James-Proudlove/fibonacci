@@ -3,6 +3,7 @@ package main
 import (
 	"fmt"
 	"image/color"
+	"math"
 	"math/rand"
 	"time"
 
@@ -13,9 +14,12 @@ import (
 )
 
 func run() {
+	var width float64 = 720
+	var height float64 = 420
+
 	cfg := pixelgl.WindowConfig{
 		Title:  "Fibonacci",
-		Bounds: pixel.R(0, 0, 720, 420),
+		Bounds: pixel.R(0, 0, width, height),
 		VSync:  true,
 	}
 	win, err := pixelgl.NewWindow(cfg)
@@ -32,8 +36,9 @@ func run() {
 
 	fmt.Print(colourR)
 
-	x := 0.0
-	y := 340.0
+	x_origin := width / 2.0
+	y_origin := height / 2.0
+	var counter float64 = 0
 
 	for !win.Closed() {
 		win.Clear(colornames.Black)
@@ -47,13 +52,17 @@ func run() {
 			uint8(colourG.value),
 			uint8(colourB.value),
 			0xff}
+
+		x := x_origin + (counter * math.Cos(counter))
+		y := y_origin + (counter * math.Sin(counter))
+
 		imd.Push(pixel.V(x, y))
 		imd.Ellipse(pixel.V(3, 3), 0)
 
 		imd.Draw(win)
 		win.Update()
-		x = x + 1
-		if x == 700 {
+		counter += 0.1
+		if x == width {
 			x = 0
 			y -= 10
 		}
